@@ -2,7 +2,6 @@ package pairmatching;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,23 +15,15 @@ public class Mission {
         pair = new ArrayList<>();
     }
 
-    /**
-     * mission 이 필요로 하는 것은 현재 pair 가 있는지
-     *
-     * 매칭
-     *
-     * 현재 pair 를 반환
-    */
-
     public void match(Course course, Map<Course, Map<String, HashSet<String>>> matchingBoard, CrewRepository crewRepository) {
         List<String> nameOfCrews = extractName(crewRepository.getCrewBy(course));
-        int numberOfPair = (int) Math.floor(nameOfCrews.size() / 2d);
+//        System.out.println(nameOfCrews);
         int shuffleCount = 0;
         boolean matchingSuccess = false;
         while (!matchingSuccess) {
             nameOfCrews = Randoms.shuffle(nameOfCrews); // 섞어버렷
+            int numberOfPair = (int) Math.floor(nameOfCrews.size() / 2d);
             pair = new ArrayList<>();
-
             for (int count = 1; count <= numberOfPair; count++) {
                 addSubList(count, numberOfPair, nameOfCrews);
             }
@@ -48,6 +39,7 @@ public class Mission {
         }
 
         if (count != numberOfPair) {
+            System.out.println(count * 2 - 2 + " " + count * 2);
             pair.add(nameOfCrews.subList(count * 2 - 2, count * 2));
         }
     }
@@ -63,7 +55,10 @@ public class Mission {
         boolean matchingSuccess = true;
 
         for (List<String> partial : pair) {
-            matchingSuccess = parsingPartial(partial, matchingBoard);
+            if (!parsingPartial(partial, matchingBoard)) { // 한번이라도 false 이면 안됨
+                matchingSuccess = false;
+                break;
+            }
         }
 
         return matchingSuccess;
@@ -75,6 +70,7 @@ public class Mission {
         for (int me = 0; me < partial.size(); me++) {
             if (isContains(me, partial, matchingBoard)) {
                 matchingSuccess = false;
+                break;
             }
         }
 

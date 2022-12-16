@@ -18,6 +18,13 @@ public class CrewRepository {
         initLevels();
     }
 
+    public void clear() {
+        for (Level level : levels.keySet()) {
+            EachLevel eachLevel = levels.get(level);
+            eachLevel.clear(this);
+        }
+    }
+
     private void initLevels() {
         levels = new HashMap<>();
         Arrays.stream(Level.values())
@@ -41,5 +48,20 @@ public class CrewRepository {
         return crews.stream()
                 .filter(crew -> crew.isSameCourse(course))
                 .collect(Collectors.toList());
+    }
+
+    public boolean isMatchPossible(Course course, Level level, String missionName) {
+        EachLevel eachLevel = levels.get(level);
+        return eachLevel.isMatchingPossible(course, missionName);
+    }
+
+    public void match(Course course, Level level, String missionName) {
+        EachLevel eachLevel = levels.get(level);
+        eachLevel.matching(course, missionName, this);
+    }
+
+    public List<List<String>> inquiry(Course course, Level level, String missionName) {
+        EachLevel eachLevel = levels.get(level);
+        return eachLevel.getPair(course, missionName);
     }
 }

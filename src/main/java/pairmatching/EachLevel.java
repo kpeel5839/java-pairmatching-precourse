@@ -20,10 +20,10 @@ public class EachLevel {
         matchingRecord = new HashMap<>();
         matchingRecord.put(Course.BACKEND, new HashMap<>());
         matchingRecord.put(Course.FRONTEND, new HashMap<>());
-        crewRepository.getBackendCrew()
+        crewRepository.getCrewBy(Course.BACKEND)
                 .forEach(crew -> matchingRecord.get(Course.BACKEND).put(crew.getName(), new HashSet<>()));
-        crewRepository.getBackendCrew()
-                .forEach(crew -> matchingRecord.get(Course.BACKEND).put(crew.getName(), new HashSet<>()));
+        crewRepository.getCrewBy(Course.FRONTEND)
+                .forEach(crew -> matchingRecord.get(Course.FRONTEND).put(crew.getName(), new HashSet<>()));
     }
 
     private void initMissions() {
@@ -35,20 +35,18 @@ public class EachLevel {
         mission.forEach(name -> missions.get(Course.FRONTEND).put(name, new Mission()));
     }
 
+    public void clear(CrewRepository crewRepository) {
+        initMatchingRecord(crewRepository);
+        initMissions();
+    }
+
     @Override
     public String toString() {
         return level.toString();
     }
 
-    public boolean isMatchingPossible(Course course, String missionName, CrewRepository crewRepository) { // match 가능한지
-        // Course, mission 들어올겨 그러면 그거 가지고 mission 에 pair 사이즈 있나 보면 됨
-        boolean isMatchingPossible = !missions.get(course).get(missionName).isPairExist();
-
-        if (isMatchingPossible) { // Pair 있으면 바로
-            matching(course, missionName, crewRepository);
-        }
-
-        return isMatchingPossible;
+    public boolean isMatchingPossible(Course course, String missionName) { // match 가능한지
+        return !missions.get(course).get(missionName).isPairExist();
     }
 
     public void matching(Course course, String missionName, CrewRepository crewRepository) { // matching 실제로 들어가는겨, rematching 하면 바로 이걸로 들어가면 됨
