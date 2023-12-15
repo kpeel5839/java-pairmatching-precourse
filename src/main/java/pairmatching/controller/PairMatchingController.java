@@ -16,6 +16,7 @@ public class PairMatchingController {
     private final OutputView outputView;
     private final PairService pairService;
     private final Map<Function, Runnable> mapper;
+    private boolean isGameProgress = true;
 
     public PairMatchingController() {
         this.inputView = InputView.from(Source.from(System.in));
@@ -29,15 +30,12 @@ public class PairMatchingController {
         mapper.put(Function.MATCHING, this::match);
         mapper.put(Function.INQUIRY, this::inquiry);
         mapper.put(Function.CLEAR, this::clear);
+        mapper.put(Function.QUIT, this::quit);
     }
 
     public void start() {
-        while (true) {
+        while (isGameProgress) {
             Function function = inputView.chooseFunction();
-
-            if (function == Function.QUIT) {
-                return;
-            }
 
             mapper.get(function)
                     .run();
@@ -68,6 +66,10 @@ public class PairMatchingController {
 
     public void clear() {
         pairService.clear();
+    }
+
+    public void quit() {
+        isGameProgress = false;
     }
 
 }
