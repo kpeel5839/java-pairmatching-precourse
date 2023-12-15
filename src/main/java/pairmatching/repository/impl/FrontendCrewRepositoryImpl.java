@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import pairmatching.repository.CrewFilePath;
 import pairmatching.repository.CrewRepository;
 
-public class FrontendCrewRepository implements CrewRepository {
+public class FrontendCrewRepositoryImpl implements CrewRepository {
 
     @Override
     public List<String> findAllCrewNames() {

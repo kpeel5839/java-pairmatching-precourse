@@ -1,11 +1,13 @@
 package pairmatching.service.pair;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Pairs {
 
-    private List<Pair> pairs;
+    private final List<Pair> pairs;
 
     private Pairs(List<Pair> pairs) {
         this.pairs = pairs;
@@ -26,7 +28,7 @@ public class Pairs {
 
     private static List<Pair> matching(List<String> crewNames) {
         if (isCrewsSizeOdd(crewNames)) {
-            createPairsWhenCrewsSizeOdd(crewNames);
+            return createPairsWhenCrewsSizeOdd(crewNames);
         }
 
         return createPairsWhenCrewsSizeEven(crewNames);
@@ -69,6 +71,14 @@ public class Pairs {
         }
 
         return Pair.from(pairCrews);
+    }
+
+    public boolean isContains(Pair input) {
+        Set<String> inputCrews = new HashSet<>(input.getCrews());
+
+        return pairs.stream()
+                .map(pair -> new HashSet<>(pair.getCrews()))
+                .anyMatch(crews -> crews.equals(inputCrews));
     }
 
     public List<Pair> getPairs() {

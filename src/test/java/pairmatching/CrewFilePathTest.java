@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pairmatching.repository.CrewRepository;
 import pairmatching.repository.impl.BackendCrewRepositoryImpl;
-import pairmatching.repository.impl.FrontendCrewRepository;
+import pairmatching.repository.impl.FrontendCrewRepositoryImpl;
 
 class CrewFilePathTest {
 
@@ -23,7 +23,7 @@ class CrewFilePathTest {
     @Test
     @DisplayName("프론트엔드 크루들의 이름을 잘 읽어오는지 테스트한다.")
     void readFrontendCrew_success() {
-        CrewRepository frontendCrewRepository = new FrontendCrewRepository();
+        CrewRepository frontendCrewRepository = new FrontendCrewRepositoryImpl();
 
         List<String> frontendCrewNames = frontendCrewRepository.findAllCrewNames();
         assertThat(frontendCrewNames).isNotEmpty();
