@@ -1,6 +1,5 @@
 package pairmatching.controller;
 
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import pairmatching.service.Project;
@@ -62,11 +61,13 @@ public class PairMatchingController {
     }
 
     public void inquiry() {
-
+        outputView.printProject();
+        Project project = inputView.chooseProject();
+        outputView.printMatchingResult(pairService.inquiryPairs(project));
     }
 
     public void clear() {
-
+        pairService.clear();
     }
 
 }

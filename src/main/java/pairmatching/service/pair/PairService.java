@@ -90,4 +90,21 @@ public class PairService {
                 .anyMatch(pairs -> pairs.isContains(pair));
     }
 
+    public Pairs inquiryPairs(Project project) {
+        validateExistsPairs(project);
+        return pairRepository.inquiry(project);
+    }
+
+    private void validateExistsPairs(final Project project) {
+        if (pairRepository.isExistsPairOfProject(project)) {
+            return;
+        }
+
+        throw new IllegalArgumentException("페어 매칭 결과가 존재하지 않습니다.");
+    }
+
+    public void clear() {
+        pairRepository.clear();
+    }
+
 }
