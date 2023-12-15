@@ -36,9 +36,7 @@ public class PairMatchingController {
     public void start() {
         while (isGameProgress) {
             Function function = inputView.chooseFunction();
-
-            mapper.get(function)
-                    .run();
+            mapper.get(function).run();
         }
     }
 

@@ -6,7 +6,12 @@ public class Application {
 
     public static void main(String[] args) {
         PairMatchingController pairMatchingController = new PairMatchingController();
-        pairMatchingController.start();
+
+        try {
+            pairMatchingController.start();
+        } catch (IllegalArgumentException exception) {
+            System.out.printf("[ERROR] %s", exception.getMessage());
+        }
     }
 
 }
