@@ -28,9 +28,10 @@ public enum Mission {
         this.name = name;
     }
 
-    public static Mission fromMissionName(String input) {
+    public static Mission fromMissionNameAndLevelName(String levelName, String missionName) {
         return Arrays.stream(values())
-                .filter(value -> value.name.equalsIgnoreCase(input))
+                .filter(value -> value.level.getName().equalsIgnoreCase(levelName))
+                .filter(value -> value.name.equalsIgnoreCase(missionName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 Mission 이 존재하지 않습니다."));
     }

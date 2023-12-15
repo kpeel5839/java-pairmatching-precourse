@@ -26,7 +26,7 @@ public class Project {
         return new Project(
                 Course.from(course),
                 Level.from(level),
-                Mission.fromMissionName(mission)
+                Mission.fromMissionNameAndLevelName(level, mission)
         );
     }
 
