@@ -59,4 +59,13 @@ public class Project {
         return Objects.hash(course, level, mission);
     }
 
+    @Override
+    public String toString() {
+        return "Project{" +
+                "course=" + course +
+                ", level=" + level +
+                ", mission=" + mission +
+                '}';
+    }
+
 }

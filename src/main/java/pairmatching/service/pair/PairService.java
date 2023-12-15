@@ -40,8 +40,9 @@ public class PairService {
     public Pairs matching(Project project) {
         pairRepository.removePairs(project);
         List<String> crewNames = findCrewNamesOfCourse(project.getCourse());
-
-        return createPairs(project, crewNames);
+        Pairs pairs = createPairs(project, crewNames);
+        pairRepository.save(project, pairs);
+        return pairs;
     }
 
     private Pairs createPairs(final Project project, final List<String> crewNames) {

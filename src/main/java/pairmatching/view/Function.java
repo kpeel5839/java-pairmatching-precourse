@@ -7,7 +7,7 @@ public enum Function {
     MATCHING("1"),
     INQUIRY("2"),
     CLEAR("3"),
-    EXIT("Q"),
+    QUIT("Q"),
     ;
 
     private final String input;
